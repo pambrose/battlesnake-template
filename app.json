@@ -1,0 +1,10 @@
+{
+  "name": "Battlesnake Quickstart Snake Template",
+  "description": "Battlesnake Quickstart Snake Template",
+  "repository": "https://github.com/pambrose/battlesnake-template",
+  "keywords": [
+    "battlesnake",
+    "kotlin",
+    "java"
+  ]
+}

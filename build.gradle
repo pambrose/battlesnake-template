@@ -1,0 +1,110 @@
+/*
+ * Copyright © 2020 Paul Ambrose (pambrose@mac.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+plugins {
+  id 'java'
+  id 'application'
+  id 'org.jetbrains.kotlin.jvm' version '1.3.72'
+  id "com.github.ben-manes.versions" version "0.28.0"
+  id 'com.github.johnrengelman.shadow' version '6.0.0'
+}
+
+allprojects {
+  repositories {
+    maven { url = 'https://maven-central.storage-download.googleapis.com/repos/central/data/' }
+    jcenter()
+    // Do not place this any higher in the order
+    // You will pick up a bad version of io.github.microutils:kotlin-logging
+    maven { url 'https://jitpack.io' }
+  }
+}
+
+// Update this value to change the snake you want to run in the uberjar
+def mainName = 'MyKotlinSnake'
+def appName = 'snake'
+
+sourceCompatibility = 1.8
+
+description = appName
+group = 'io.battlenake'
+version = '1.0.0'
+
+dependencies {
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+  implementation "io.ktor:ktor-server-core:$ktor_version"
+  implementation "com.github.pambrose:battlesnake-quickstart:${quickstart_version}"
+  implementation "io.github.microutils:kotlin-logging:${logging_version}"
+  implementation "ch.qos.logback:logback-classic:${logback_version}"
+  implementation "org.slf4j:jul-to-slf4j:${slf4j_version}"
+}
+
+startScripts.enabled = false
+
+application {
+  mainClassName = mainName
+  //applicationDefaultJvmArgs = ['-DPORT=8080']
+}
+
+// This task creates the shell scripts to run the app
+task simpleSnake(type: CreateStartScripts) {
+  mainClassName = mainName
+  applicationName = appName
+  outputDir = new File(project.buildDir, 'tmp')
+  classpath = startScripts.classpath
+}
+
+applicationDistribution.into('bin') {
+  from(simpleSnake)
+  fileMode = 0755
+}
+
+// Include build uberjars in heroku deploy
+task stage(dependsOn: ['uberjar', 'build', 'clean'])
+build.mustRunAfter clean
+
+shadowJar {
+  mergeServiceFiles()
+}
+
+task uberjar(type: Jar, dependsOn: shadowJar) {
+  archiveFileName = 'snake.jar'
+  manifest {
+    attributes('Implementation-Title': appName)
+    attributes('Implementation-Version': version)
+    attributes('Built-Date': new Date())
+    attributes('Built-JDK': System.getProperty('java.version'))
+    attributes('Main-Class': mainName)
+  }
+  from zipTree(shadowJar.archiveFile)
+}
+
+compileKotlin {
+  kotlinOptions.jvmTarget = '1.8'
+}
+
+compileTestKotlin {
+  kotlinOptions.jvmTarget = '1.8'
+}
+
+test {
+  useJUnitPlatform()
+
+  testLogging {
+    events "passed", "skipped", "failed", "standardOut", "standardError"
+    exceptionFormat "full"
+    showStandardStreams = true
+  }
+}
