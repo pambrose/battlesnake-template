@@ -9,8 +9,8 @@ Visit [Battlesnake.io](https://docs.battlesnake.io) for API documentation and in
 
 ## Clone a new snake
 
-Click on the [![](docs/template_button.png)](https://github.com/pambrose/battlesnake-template/generate) button to 
-clone the template repo and create your own snake.
+Click on the [![](docs/template_button.png)](https://github.com/pambrose/battlesnake-template/generate) button above 
+to clone the template repo and create your own snake.
 
 ## Template Snakes 
 
