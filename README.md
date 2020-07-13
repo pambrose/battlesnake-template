@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/pambrose/battlesnake-template.svg?branch=master)](https://travis-ci.org/pambrose/battlesnake-template)
 
+
 A collection of simple [Battlesnakes](http://battlesnake.io) written in Kotlin and Java using 
 the [Battlesnake Quickstart](https://github.com/pambrose/battlesnake-quickstart) framework.
 
@@ -10,6 +11,11 @@ Visit [Battlesnake.io](https://docs.battlesnake.io) for API documentation and in
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/pambrose/battlesnake-template)
 [![Deploy on Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 [![Run on Repl.it](https://repl.it/badge/github/pambrose/battlesnake-template)](https://repl.it/github/pambrose/battlesnake-template)
+
+## Clone a new snake
+
+Click on the [![](docs/template_button.png)button](https://github.com/pambrose/battlesnake-template/generate) to 
+clone the template repo
 
 ## Snake Definition
 
