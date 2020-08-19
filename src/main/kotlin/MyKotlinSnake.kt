@@ -28,7 +28,7 @@ import io.battlesnake.core.SnakeContext
 import io.battlesnake.core.StartRequest
 import io.battlesnake.core.UP
 import io.battlesnake.core.strategy
-import io.ktor.application.ApplicationCall
+import io.ktor.application.*
 
 object MyKotlinSnake : AbstractBattleSnake<MyKotlinSnake.MySnakeContext>() {
 
@@ -42,8 +42,10 @@ object MyKotlinSnake : AbstractBattleSnake<MyKotlinSnake.MySnakeContext>() {
       onStart { context: MySnakeContext, request: StartRequest ->
         val you = request.you
         val board = request.board
+
         context.gotoOriginMoves = originPath(you.headPosition.x, you.headPosition.y).iterator()
         context.perimeterMoves = perimeterPath(board.width, board.height).iterator()
+
         logger.info { "Goto origin moves: ${you.headPosition.x},${you.headPosition.y} game id: ${request.gameId}" }
         logger.info { "Perimeter moves: ${board.width}x${board.height} game id: ${request.gameId}" }
       }
