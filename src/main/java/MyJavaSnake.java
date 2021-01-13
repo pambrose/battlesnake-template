@@ -1,5 +1,5 @@
 /*
- * Copyright © 2020 Paul Ambrose (pambrose@mac.com)
+ * Copyright © 2021 Paul Ambrose (pambrose@mac.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,6 @@ import io.ktor.application.ApplicationCall;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.IntStream;
 
 import static io.battlesnake.core.JavaConstants.DOWN;
 import static io.battlesnake.core.JavaConstants.LEFT;
@@ -53,7 +52,9 @@ public class MyJavaSnake extends AbstractBattleSnake<MyJavaSnake.MySnakeContext>
     private final List<MoveResponse> path = new LinkedList<>();
 
     private MySnakeContext addToPath(int count, MoveResponse response) {
-      IntStream.range(0, count).forEach(i -> path.add(response));
+      for (int i = 0; i < count; i++) {
+        path.add(response);
+      }
       return this;
     }
   }
@@ -72,8 +73,9 @@ public class MyJavaSnake extends AbstractBattleSnake<MyJavaSnake.MySnakeContext>
     public void onStart(MySnakeContext context, StartRequest request) {
       // Add moves that get the snake to origin
       Position pos = request.getYou().getHeadPosition();
-      context.addToPath(pos.getY(), DOWN)
-          .addToPath(pos.getX(), LEFT);
+      context.addToPath(pos.getX(), LEFT)
+          .addToPath(pos.getY(), DOWN)
+      ;
     }
 
     @Override

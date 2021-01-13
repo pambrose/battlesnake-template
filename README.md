@@ -2,15 +2,19 @@
 
 [![Build Status](https://travis-ci.org/pambrose/battlesnake-template.svg?branch=master)](https://travis-ci.org/pambrose/battlesnake-template)
 
-A template for creating your own Battlesnake written in Kotlin and Java using 
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/pambrose/battlesnake-template)
+[![Deploy on Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/pambrose/battlesnake-template)
+[![Run on Repl.it](https://repl.it/badge/github/pambrose/battlesnake-template)](https://repl.it/github/pambrose/battlesnake-template)
+
+A template for creating your own Battlesnake written in Kotlin and Java using
 the [Battlesnake Quickstart](https://github.com/pambrose/battlesnake-quickstart) framework.
 
 Visit [Battlesnake.io](https://docs.battlesnake.io) for API documentation and instructions for creating a game.
 
 ## Clone a new snake
 
-Click on the [![](docs/template_button.png)](https://github.com/pambrose/battlesnake-template/generate) button above 
-to clone the template repo and create your own snake.
+Click on the [![](docs/template_button.png)](https://github.com/pambrose/battlesnake-template/generate) button above to
+clone the template repo and create your own snake.
 
 ## Template Snakes 
 

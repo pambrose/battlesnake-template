@@ -1,5 +1,5 @@
 /*
- * Copyright © 2020 Paul Ambrose (pambrose@mac.com)
+ * Copyright © 2021 Paul Ambrose (pambrose@mac.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,16 +17,12 @@
 @file:Suppress("UndocumentedPublicClass", "UndocumentedPublicFunction")
 
 import io.battlesnake.core.AbstractBattleSnake
-import io.battlesnake.core.DOWN
 import io.battlesnake.core.DescribeResponse
 import io.battlesnake.core.GameStrategy
-import io.battlesnake.core.LEFT
 import io.battlesnake.core.MoveRequest
 import io.battlesnake.core.MoveResponse
-import io.battlesnake.core.RIGHT
 import io.battlesnake.core.SnakeContext
 import io.battlesnake.core.StartRequest
-import io.battlesnake.core.UP
 import io.battlesnake.core.strategy
 import io.ktor.application.*
 
@@ -46,7 +42,7 @@ object MyKotlinSnake : AbstractBattleSnake<MyKotlinSnake.MySnakeContext>() {
         context.gotoOriginMoves = originPath(you.headPosition.x, you.headPosition.y).iterator()
         context.perimeterMoves = perimeterPath(board.width, board.height).iterator()
 
-        logger.info { "Goto origin moves: ${you.headPosition.x},${you.headPosition.y} game id: ${request.gameId}" }
+        logger.info { "Go to origin moves: ${you.headPosition.x},${you.headPosition.y} game id: ${request.gameId}" }
         logger.info { "Perimeter moves: ${board.width}x${board.height} game id: ${request.gameId}" }
       }
 
@@ -54,7 +50,7 @@ object MyKotlinSnake : AbstractBattleSnake<MyKotlinSnake.MySnakeContext>() {
         if (request.isAtOrigin)
           context.goneToOrigin = true
 
-        val moves =
+        val moves: Iterator<MoveResponse> =
           if (context.goneToOrigin)
             context.perimeterMoves
           else
@@ -73,13 +69,13 @@ object MyKotlinSnake : AbstractBattleSnake<MyKotlinSnake.MySnakeContext>() {
   override fun snakeContext(): MySnakeContext =
     MySnakeContext()
 
-  private fun originPath(x: Int, y: Int) =
+  private fun originPath(x: Int, y: Int): Sequence<MoveResponse> =
     sequence {
-      repeat(y) { yield(DOWN) }
       repeat(x) { yield(LEFT) }
+      repeat(y) { yield(DOWN) }
     }
 
-  private fun perimeterPath(width: Int, height: Int) =
+  private fun perimeterPath(width: Int, height: Int): Sequence<MoveResponse> =
     sequence {
       while (true) {
         repeat(height - 1) { yield(UP) }
