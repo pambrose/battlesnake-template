@@ -40,54 +40,43 @@ object MyKotlinSnake : AbstractBattleSnake<MyKotlinSnake.MySnakeContext>() {
       }
 
       onStart { context: MySnakeContext, request: StartRequest ->
+        fun originPath(x: Int, y: Int): List<MoveResponse> =
+          buildList {
+            repeat(y) { add(DOWN) }
+            repeat(x) { add(LEFT) }
+          }
+
         val you = request.you
         val board = request.board
 
-        context.gotoOriginMoves = originPath(you.headPosition.x, you.headPosition.y).iterator()
-        context.perimeterMoves = perimeterPath(board.width, board.height).iterator()
+        context.moves = originPath(you.headPosition.x, you.headPosition.y).iterator()
 
         logger.info { "Go to origin moves: ${you.headPosition.x},${you.headPosition.y} game id: ${request.gameId}" }
         logger.info { "Perimeter moves: ${board.width}x${board.height} game id: ${request.gameId}" }
       }
 
       onMove { context: MySnakeContext, request: MoveRequest ->
+        fun perimeterPath(width: Int, height: Int): List<MoveResponse> =
+          buildList {
+            repeat(height - 1) { add(UP) }
+            repeat(width - 1) { add(RIGHT) }
+            repeat(height - 1) { add(DOWN) }
+            repeat(width - 1) { add(LEFT) }
+          }
+
         if (request.isAtOrigin)
-          context.goneToOrigin = true
+          context.moves = perimeterPath(request.board.width, request.board.height).iterator()
 
-        val moves: Iterator<MoveResponse> =
-          if (context.goneToOrigin)
-            context.perimeterMoves
-          else
-            context.gotoOriginMoves
-
-        moves.next()
+        context.moves.next()
       }
     }
 
   class MySnakeContext : SnakeContext() {
-    lateinit var gotoOriginMoves: Iterator<MoveResponse>
-    lateinit var perimeterMoves: Iterator<MoveResponse>
-    var goneToOrigin = false
+    lateinit var moves: Iterator<MoveResponse>
   }
 
   override fun snakeContext(): MySnakeContext =
     MySnakeContext()
-
-  private fun originPath(x: Int, y: Int): Sequence<MoveResponse> =
-    sequence {
-      repeat(y) { yield(DOWN) }
-      repeat(x) { yield(LEFT) }
-    }
-
-  private fun perimeterPath(width: Int, height: Int): Sequence<MoveResponse> =
-    sequence {
-      while (true) {
-        repeat(height - 1) { yield(UP) }
-        repeat(width - 1) { yield(RIGHT) }
-        repeat(height - 1) { yield(DOWN) }
-        repeat(width - 1) { yield(LEFT) }
-      }
-    }
 
   @JvmStatic
   fun main(args: Array<String>) {
