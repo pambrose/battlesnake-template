@@ -17,12 +17,16 @@
 @file:Suppress("UndocumentedPublicClass", "UndocumentedPublicFunction")
 
 import io.battlesnake.core.AbstractBattleSnake
+import io.battlesnake.core.DOWN
 import io.battlesnake.core.DescribeResponse
 import io.battlesnake.core.GameStrategy
+import io.battlesnake.core.LEFT
 import io.battlesnake.core.MoveRequest
 import io.battlesnake.core.MoveResponse
+import io.battlesnake.core.RIGHT
 import io.battlesnake.core.SnakeContext
 import io.battlesnake.core.StartRequest
+import io.battlesnake.core.UP
 import io.battlesnake.core.strategy
 import io.ktor.application.*
 
