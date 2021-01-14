@@ -75,8 +75,8 @@ object MyKotlinSnake : AbstractBattleSnake<MyKotlinSnake.MySnakeContext>() {
 
   private fun originPath(x: Int, y: Int): Sequence<MoveResponse> =
     sequence {
-      repeat(x) { yield(LEFT) }
       repeat(y) { yield(DOWN) }
+      repeat(x) { yield(LEFT) }
     }
 
   private fun perimeterPath(width: Int, height: Int): Sequence<MoveResponse> =
