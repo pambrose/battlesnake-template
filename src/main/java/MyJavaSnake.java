@@ -49,16 +49,6 @@ public class MyJavaSnake extends AbstractBattleSnake<MyJavaSnake.MySnakeContext>
     }
   }
 
-  @Override
-  public MySnakeContext snakeContext() {
-    return new MySnakeContext();
-  }
-
-  @Override
-  public MyGameStrategy gameStrategy() {
-    return new MyGameStrategy(true);
-  }
-
   static class MyGameStrategy extends AbstractGameStrategy<MySnakeContext> {
     public MyGameStrategy(boolean verbose) {
       super(verbose);
@@ -74,8 +64,7 @@ public class MyJavaSnake extends AbstractBattleSnake<MyJavaSnake.MySnakeContext>
       // Add moves that get the snake to origin
       Position pos = request.getYou().getHeadPosition();
       context.addToPath(pos.getX(), DOWN)
-          .addToPath(pos.getY(), LEFT)
-      ;
+          .addToPath(pos.getY(), LEFT);
     }
 
     @Override
@@ -93,5 +82,15 @@ public class MyJavaSnake extends AbstractBattleSnake<MyJavaSnake.MySnakeContext>
       // Remove a move from the head of the list
       return context.path.remove(0);
     }
+  }
+
+  @Override
+  public MySnakeContext snakeContext() {
+    return new MySnakeContext();
+  }
+
+  @Override
+  public MyGameStrategy gameStrategy() {
+    return new MyGameStrategy(true);
   }
 }
