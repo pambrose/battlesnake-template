@@ -1,14 +1,14 @@
 plugins {
   id 'java'
   id 'application'
-  id 'org.jetbrains.kotlin.jvm' version '1.4.30'
-  id "com.github.ben-manes.versions" version "0.36.0"
+  id 'org.jetbrains.kotlin.jvm' version '1.5.20'
+  id "com.github.ben-manes.versions" version "0.39.0"
   id 'com.github.johnrengelman.shadow' version '6.1.0'
 }
 
 repositories {
   maven { url = 'https://maven-central.storage-download.googleapis.com/repos/central/data/' }
-  jcenter()
+  mavenCentral()
   // Do not place this any higher in the order
   // You will pick up a bad version of io.github.microutils:kotlin-logging
   maven { url = 'https://jitpack.io' }
